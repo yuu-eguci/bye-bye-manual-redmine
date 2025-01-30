@@ -1,0 +1,18 @@
+# DOC: https://docs.astral.sh/ruff/configuration/#configuring-ruff
+[tool.ruff]
+
+target-version = "py311"
+line-length = 120
+
+[tool.ruff.lint]
+# flake8 のエラーコードを指定 (E: スタイル, F: 論理エラー)。
+select = [
+    "E",
+    "F",
+    "I",
+]
+ignore = [] # 無視するエラーコードがあれば指定。
+
+[tool.mypy]
+# 外部モジュールを無視。
+ignore_missing_imports = true

@@ -1,0 +1,26 @@
+{
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#ff0000",
+    },
+
+    // いつもの Python 設定。
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+    "python.autoComplete.extraPaths": [
+        "${workspaceFolder}/.venv/lib/python*/site-packages"
+    ],
+    // DOC (https://github.com/astral-sh/ruff-vscode) の、
+    // "Taken together, you can configure Ruff to format, fix, and organize imports on-save via the following settings.json"
+    // の設定。
+    "[python]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit",
+            "source.organizeImports": "explicit"
+        },
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    // Mypy 拡張機能が pyproject.toml を読み込むようにするための設定。
+    "mypy-type-checker.args": [
+        "\"mypy-type-checker.args\" = [\"--config-file=./pyproject.toml\"]"
+    ],
+}
