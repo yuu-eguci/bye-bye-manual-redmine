@@ -42,7 +42,7 @@ pipenv run python fetch_activities.py \
 pipenv run python main.py \
     --url $REDMINE_URL \
     --key $REDMINE_API_KEY \
-    --issues 'Project A' 'Project B' \
+    --issues 'Issue A' 'Issue B' \
     --time 0.85 0.15 \
     --activity 9 \
     --freee 'path/to/freee.csv'
