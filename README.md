@@ -3,7 +3,7 @@ Bye Bye Manual Redmine!
 
 手動入力なんてやってられないぜ!
 
-Python 3.11 + pipenv + ruff + python-redmine + lazy person.
+Python 3.11 + pipenv + ruff + python-redmine + freee + lazy person.
 
 ![](./docs/readme.png)
 
