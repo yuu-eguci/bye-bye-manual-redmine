@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 python-redmine = "*"
+pandas = "*"
 
 [dev-packages]
 
