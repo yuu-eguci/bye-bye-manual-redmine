@@ -31,14 +31,30 @@ def _fetch_user_id(redmine: Redmine) -> int:
 
 
 def _get_daily_work_hours(freee_csv_path: str) -> dict[str, float]:
+
     df = pd.read_csv(freee_csv_path)
 
     # `hh:mm` 形式の時間を h（小数）に変換
-    def time_to_hours(time_str):
+    def time_to_hours(time_str: str) -> float:
         hours, minutes = map(int, time_str.split(":"))
         return hours + minutes / 60
 
     df["総勤務時間"] = df["総勤務時間"].apply(time_to_hours)
+
+    # 日付を 'YYYY-MM-DD' 形式に変換
+    def normalize_date(date_str: str) -> str:
+        from datetime import datetime
+        # 例: '2025/8/21' や '2025-8-21' などを '2025-08-21' に
+        for fmt in ("%Y/%m/%d", "%Y-%m-%d"):
+            try:
+                dt = datetime.strptime(date_str, fmt)
+                return dt.strftime("%Y-%m-%d")
+            except ValueError:
+                continue
+        # どれにも合わなければそのまま返す（API でエラーになるはず）
+        return date_str
+
+    df["日付"] = df["日付"].apply(normalize_date)
     daily_work_hours = df.groupby("日付")["総勤務時間"].sum().to_dict()
     return daily_work_hours
 
