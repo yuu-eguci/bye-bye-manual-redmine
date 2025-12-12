@@ -36,8 +36,13 @@ def _get_daily_work_hours(freee_csv_path: str) -> dict[str, float]:
 
     # `hh:mm` 形式の時間を h（小数）に変換
     def time_to_hours(time_str: str) -> float:
-        hours, minutes = map(int, time_str.split(":"))
-        return hours + minutes / 60
+        if not isinstance(time_str, str):
+            return 0.0
+        try:
+            hours, minutes = map(int, time_str.split(":"))
+            return hours + minutes / 60
+        except Exception:
+            return 0.0
 
     df["総勤務時間"] = df["総勤務時間"].apply(time_to_hours)
 
