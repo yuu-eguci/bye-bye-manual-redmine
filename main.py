@@ -64,7 +64,7 @@ def _get_daily_work_hours(freee_csv_path: str) -> dict[str, float]:
     return daily_work_hours
 
 
-def _get_issues(redmine: Redmine, issue_names: list[str], user_id: int) -> list[Issue]:
+def _get_issues(redmine: Redmine, issue_names: list[str], user_id: int) -> list[Issue] | None:
     issues = []
     for issue_name in issue_names:
         matching_issues = redmine.issue.filter(subject=issue_name, assigned_to_id=user_id)
@@ -75,7 +75,6 @@ def _get_issues(redmine: Redmine, issue_names: list[str], user_id: int) -> list[
             return
         elif len(matching_issues) > 1:
             # 想定外に複数の Issue が見つかった場合
-            # english
             logging.error(f"Issue が複数見つかった。非想定だからやり直して: '{issue_name}'")
             for issue in matching_issues:
                 logging.info(f"Matching: {redmine.url}/issues/{issue.id} : {issue.subject}")
@@ -135,7 +134,10 @@ def main(
         return
 
     # Issue を取得する。
+    # ひとつでも特定できない issue があれば、何も登録せずに終了。
     issues = _get_issues(redmine, redmine_issue_names, user_id)
+    if issues is None:
+        return
 
     # さて、 issue 1個ずつ、時間を登録していく。
     for issue, ratio in zip(issues, time_distribution):

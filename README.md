@@ -39,6 +39,8 @@ pipenv run python fetch_activities.py \
 # これ実行。
 # NOTE: Issue の存在が前提になっているので、事前に作っておくこと。
 #       1年ぶんくらいの作業記録用の issue を作っておくといいかも。
+#       --issues の名前は、自分が担当者の issue の中から題名で探します。
+#       見つからない issue や、複数見つかる issue がひとつでもあれば、何も登録せずに終了します。
 pipenv run python main.py \
     --url $REDMINE_URL \
     --key $REDMINE_API_KEY \
