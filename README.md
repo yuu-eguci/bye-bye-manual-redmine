@@ -96,11 +96,26 @@ pipenv run python register_monthly_issues.py \
 2025-02-02 20:18:56,711 - INFO - 登録終わり。 Issue 確認する?: .../issues/747
 ```
 
+## Test
+
+pytest でテストします。
+Redmine への通信はすべてモックに置き換えているため、テストで Redmine へアクセスすることはありません。
+
+```bash
+# 初回だけ、 dev dependencies (pytest) も含めてインストールします。
+export PIPENV_VENV_IN_PROJECT=1; pipenv sync --dev
+
+pipenv run pytest
+```
+
+GitHub Actions (`.github/workflows/test.yml`) でも、 pull request と main への push のたびに同じテストを実行します。
+
 ## Memo
 
 ```bash
 export PIPENV_VENV_IN_PROJECT=1; pipenv install --python 3.11
 pipenv install python-redmine pandas
+pipenv install --dev pytest
 ```
 
 - Ruff
