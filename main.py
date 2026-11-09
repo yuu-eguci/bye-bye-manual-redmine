@@ -12,7 +12,7 @@ from redminelib.resources.standard import Issue
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 
-def _parse_args():
+def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Redmine に Freee の勤怠データを同期するスクリプト")
 
     parser.add_argument("--url", required=True, help="Redmine の URL")
@@ -21,8 +21,9 @@ def _parse_args():
     parser.add_argument("--time", nargs="+", type=float, required=True, help="Issue ごとの時間分配率 (複数可)")
     parser.add_argument("--activity", type=int, required=True, help="Redmine のアクティビティ ID")
     parser.add_argument("--freee", required=True, help="Freee の CSV ファイルパス")
+    parser.add_argument("--dry-run", action="store_true", help="Redmine へは登録せず、登録予定の内容だけログに出す")
 
-    return parser.parse_args()
+    return parser.parse_args(argv)
 
 
 def _fetch_user_id(redmine: Redmine) -> int:
@@ -182,5 +183,5 @@ if __name__ == "__main__":
         redmine_issue_names=args.issues,
         time_distribution=args.time,
         activity_id=args.activity,
-        dry_run=False,
+        dry_run=args.dry_run,
     )
