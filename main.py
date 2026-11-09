@@ -111,7 +111,7 @@ def main(
         user_id = _fetch_user_id(redmine)
         logging.info(f"User ID 見つかったよ: {user_id}")
     except Exception:
-        logging.exception(f"User ID 取得に失敗。 API key を確認せよ: '{redmine_api_key}'")
+        logging.exception("User ID 取得に失敗。 API key を確認せよ。")
         return
 
     # 見つからん -> メッセージ出して終了。
