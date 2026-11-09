@@ -48,6 +48,16 @@ pipenv run python main.py \
     --time 0.85 0.15 \
     --activity 9 \
     --freee 'path/to/freee.csv'
+
+# --dry-run をつけると、 Redmine へは登録せず、登録予定の内容だけをログに出力します。
+pipenv run python main.py \
+    --url $REDMINE_URL \
+    --key $REDMINE_API_KEY \
+    --issues 'Issue A' 'Issue B' \
+    --time 0.85 0.15 \
+    --activity 9 \
+    --freee 'path/to/freee.csv' \
+    --dry-run
 ```
 
 ### 出力例
