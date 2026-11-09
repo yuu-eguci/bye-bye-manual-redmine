@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 
 
 def _parse_args():
-    parser = argparse.ArgumentParser(description="Redmine に Freee の勤怠データを同期するスクリプト")
+    parser = argparse.ArgumentParser(description="Redmine に月ごとの issue を作成するスクリプト")
 
     parser.add_argument("--url", required=True, help="Redmine の URL")
     parser.add_argument("--key", required=True, help="Redmine の API キー")

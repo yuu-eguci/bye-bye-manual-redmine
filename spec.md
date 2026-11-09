@@ -25,7 +25,7 @@ curl --location '.../issues.json?assigned_to_id=5&subject=Aproject' \
 ```
 
 - 存在しないなら issue を作る
-    - ……は、いらねーか。 issue はちゃんと手作業で作ってくらはい。
+    - ……は、 main.py では行いません。 issue は事前に作成してください (月ごとの issue は register_monthly_issues.py で作成できます)。
 - Redmine から issue の時間データを取得する
 
 ```bash

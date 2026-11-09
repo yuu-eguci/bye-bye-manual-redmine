@@ -8,7 +8,7 @@ import logging
 from datetime import date
 from pathlib import Path
 from types import SimpleNamespace
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, call
 
 import pytest
 
@@ -87,3 +87,20 @@ def test_nothing_is_created_when_issue_and_ratio_counts_differ(monkeypatch, tmp_
 
     assert "引数がおかしい" in caplog.text
     redmine.time_entry.create.assert_not_called()
+
+
+def test_hours_are_rounded_and_zero_hour_days_are_skipped(monkeypatch, tmp_path):
+    csv_path = tmp_path / "freee.csv"
+    csv_path.write_text("日付,総勤務時間\n2025-01-06,8:20\n2025-01-07,\n", encoding="utf-8")
+    issues = {
+        "Issue A": [SimpleNamespace(id=721, subject="Issue A")],
+        "Issue B": [SimpleNamespace(id=722, subject="Issue B")],
+    }
+    redmine = _fake_redmine(issues)
+
+    _run(monkeypatch, redmine, str(csv_path), ["Issue A", "Issue B"], [0.85, 0.15])
+
+    assert redmine.time_entry.create.call_args_list == [
+        call(issue_id=721, spent_on="2025-01-06", hours=7.08, activity_id=9, comments=""),
+        call(issue_id=722, spent_on="2025-01-06", hours=1.25, activity_id=9, comments=""),
+    ]
